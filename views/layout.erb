@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>fUpload</title>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Bootstrap core JS -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+    <%= yield_content(:head) %>
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">fUpload</a>
+        <div class="nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="<%= @page == :index ? "active" : "" %>"><a href="/">Home</a></li>
+            <li class="<%= @page == :about ? "active" : "" %>"><a href="/about"></a></li>
+            <li class="<%= @page == :skills ? "active" : "" %>"><a href="/skills">Write</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div id="main" class="container">
+      <%= yield %>
+    </div><!-- /.container -->
+
+  </body>
+</html>

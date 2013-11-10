@@ -1,0 +1,59 @@
+#main {
+  width: 960px;
+  margin: 0px auto;
+  border-radius: 5px;
+  background-color: #eee;
+  text-align: center;
+  box-shadow: 2px 2px 1px #ddd;
+  min-height: 800px;
+}
+
+
+h1 {
+  text-decoration: underline;
+}
+
+
+/* Dropzone */
+.dz-default {
+  border: 8px dotted;
+  margin-top: 50px;
+  width: 200px;
+  height: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
+
+  span {
+    line-height: 180px;
+    font-weight: bold;
+  }
+}
+
+
+/* Masonry */
+#user-content {
+  margin: 0px auto;
+  width: 800px;
+}
+
+.item {
+  float: left;
+
+  .w0 {
+    width: 15%
+  }
+  .w1 {
+    width: 25%;
+  }
+  .w2 {
+    width: 35%;
+  }
+  .w3 {
+    width: 45%;
+  }
+
+  img {
+    display: none;
+  }
+}
