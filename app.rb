@@ -11,30 +11,27 @@ end
 # Pages
 get '/' do
   @page = :index
-  @images = []
-  path = '/uploads/'
-  Dir.foreach("public"+path) {|e| @images << path+e if e =~ /jpg|png|gif/}
-  @images = @images.shuffle
   erb :index, {layout: :layout}
 end
 
-get '/upload' do
-  protect!
-  @page = :upload
-  erb :upload, {layout: :layout}
+get '/about' do
+  @page = :about
+  erb :about, {layout: :layout}
 end
 
-post '/upload' do
-  protect!
-  file = params[:file][:tempfile]
-  filename = params[:file][:filename]
-  cp file.path, "public/uploads/#{filename}"
-  "Successfully uploaded #{filename}"
+get '/practice' do
+  @page = :practice
+  erb :practice, {layout: :layout}
 end
 
-get '/write' do
-  @page = :write
-  erb :write, {layout: :layout}
+get '/contact' do
+  @page = :contact
+  erb :about, {layout: :layout}
+end
+
+get '/imprint' do
+  @page = :imprint
+  erb :imprint, {layout: :layout}
 end
 
 # Helpers
