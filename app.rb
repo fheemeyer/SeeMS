@@ -24,6 +24,16 @@ get '/practice' do
   erb :practice, {layout: :layout}
 end
 
+get '/philosophy' do
+  @page = :philosophy
+  erb :philosophy, {layout: :layout}
+end
+
+get '/concept' do
+  @page = :concept
+  erb :concept, {layout: :layout}
+end
+
 get '/contact' do
   @page = :contact
   erb :about, {layout: :layout}
