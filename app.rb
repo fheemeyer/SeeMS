@@ -3,6 +3,8 @@ require "sinatra/contrib"
 require "sass"
 include FileUtils
 
+set :bind, '0.0.0.0'
+
 # Styles
 get '/*.css' do
   scss "#{params[:splat].first}".to_sym
@@ -47,6 +49,16 @@ end
 get '/imprint' do
   @page = :imprint
   erb :imprint, {layout: :layout}
+end
+
+get '/test' do
+  @page = :test
+  erb :test, {layout: :layout}
+end
+
+get '/admin' do
+  @page = :admin
+  erb :admin, {layout: :layout}
 end
 
 # Helpers
