@@ -34,6 +34,11 @@ get '/concept' do
   erb :concept, {layout: :layout}
 end
 
+get '/costs' do
+  @page = :costs
+  erb :costs, {layout: :layout}
+end
+
 get '/contact' do
   @page = :contact
   erb :about, {layout: :layout}
