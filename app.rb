@@ -1,9 +1,19 @@
 require "sinatra"
 require "sinatra/contrib"
 require "sass"
+require "mongoid"
 include FileUtils
 
+Mongoid.load!('config/mongoid.yml')
+
 set :bind, '0.0.0.0'
+
+before do
+  unless Application.first
+    Application.new(:title => "Foo").save!
+  end
+  @app = Application.first
+end
 
 # Styles
 get '/*.css' do

@@ -1,16 +1,25 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    activemodel (3.2.14)
+      activesupport (= 3.2.14)
+      builder (~> 3.0.0)
+    activesupport (3.2.14)
+      i18n (~> 0.6, >= 0.6.4)
+      multi_json (~> 1.0)
     backports (3.3.4)
-    chunky_png (1.2.8)
-    compass (0.12.2)
-      chunky_png (~> 1.2)
-      fssm (>= 0.2.7)
-      sass (~> 3.1)
+    builder (3.0.4)
     daemons (1.1.9)
     eventmachine (1.0.3)
-    fssm (0.2.10)
+    i18n (0.6.5)
+    mongoid (3.1.5)
+      activemodel (~> 3.2)
+      moped (~> 1.4)
+      origin (~> 1.0)
+      tzinfo (~> 0.3.29)
+    moped (1.5.1)
     multi_json (1.8.0)
+    origin (1.1.0)
     rack (1.5.2)
     rack-protection (1.5.0)
       rack
@@ -35,12 +44,13 @@ GEM
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
     tilt (1.4.1)
+    tzinfo (0.3.38)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  compass
+  mongoid
   sass
   shotgun
   sinatra

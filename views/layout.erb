@@ -19,6 +19,8 @@
 
     <!-- Bootstrap core JS -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
     <script>
       $(document).ready(function(){
@@ -45,7 +47,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Yvonne Heemeyer</a>
+        <a class="navbar-brand" href="#"><%= @app.title %></a>
         <div class="nav-collapse">
           <ul class="nav navbar-nav">
             <li class="<%= @page == :index ? "active" : "" %>"><a href="/">Home</a></li>
