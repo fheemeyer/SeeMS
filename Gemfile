@@ -5,4 +5,7 @@ gem "sinatra"
 gem "sinatra-contrib"
 gem "shotgun"
 gem "sass"
-gem "compass"
+gem "mongoid"
+
+gem "pry"
+

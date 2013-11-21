@@ -1,9 +1,24 @@
 require "sinatra"
 require "sinatra/contrib"
+require "sinatra/reloader" if development?
 require "sass"
+require "mongoid"
+require "pry"
+require_relative "models/init"
 include FileUtils
 
+Mongoid.load!('config/mongoid.yml')
+
 set :bind, '0.0.0.0'
+
+before do
+  unless Application.first
+    Application.new(:title => "Foo").save!
+  end
+
+  @app = Application.first
+  @pages = @app.pages
+end
 
 # Styles
 get '/*.css' do
@@ -11,39 +26,39 @@ get '/*.css' do
 end
 
 # Pages
+get '/p/:page' do
+
+end
+
+# Admin Corner
+get '/admin' do
+  @page = :admin
+  erb :admin, {layout: :layout}
+end
+
+post '/admin/app/update' do
+  @app.update_attributes(params[:application])
+end
+
+post '/admin/pages/create' do
+  if(params["page"]["type"] == "content")
+    @new_page = ContentPage.new(params["page"])
+  else
+    @new_page = NavigationPage.new(params["page"])
+  end
+
+  @new_page.save
+  @app.pages << @new_page
+end
+
+get '/admin/pages' do
+  @pages.to_json
+end
+
+# Additional
 get '/' do
   @page = :index
   erb :index, {layout: :layout}
-end
-
-get '/about' do
-  @page = :about
-  erb :about, {layout: :layout}
-end
-
-get '/practice' do
-  @page = :practice
-  erb :practice, {layout: :layout}
-end
-
-get '/philosophy' do
-  @page = :philosophy
-  erb :philosophy, {layout: :layout}
-end
-
-get '/concept' do
-  @page = :concept
-  erb :concept, {layout: :layout}
-end
-
-get '/costs' do
-  @page = :costs
-  erb :costs, {layout: :layout}
-end
-
-get '/contact' do
-  @page = :contact
-  erb :about, {layout: :layout}
 end
 
 get '/imprint' do
@@ -54,11 +69,6 @@ end
 get '/test' do
   @page = :test
   erb :test, {layout: :layout}
-end
-
-get '/admin' do
-  @page = :admin
-  erb :admin, {layout: :layout}
 end
 
 # Helpers
