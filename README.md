@@ -1,4 +1,5 @@
-hp-yvonne-heemeyer
-==================
+- SeeMS -
+=========
 
-Website of my mother. Build using Sinatra
+SeeMS (pronounced CMS) is a tiny CMS written in Sinatra.
+More info to come as development goes along.
