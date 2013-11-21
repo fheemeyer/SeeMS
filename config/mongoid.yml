@@ -1,7 +1,13 @@
 development:
-  host: localhost
-  db: yheemeyer
+  sessions:
+    default:
+      hosts: 
+        - localhost
+      database: yheemeyer
 
-development:
-  host: localhost
-  db: yheemeyer
+production:
+  sessions:
+    default:
+      hosts: 
+        - localhost
+      database: yheemeyer
