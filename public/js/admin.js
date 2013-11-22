@@ -23,32 +23,52 @@ $(function() {
         }
   });
 
+  SeeMS.Admin.$sortable = $('.sortable');
+
   $("#new-page").click(function() {
     $("#new-page-dialog").dialog("open");
   });
 
-  $(".sortable").sortable();
+  SeeMS.Admin.$sortable.sortable();
   SeeMS.Admin.fetchPages();
 });
 
 SeeMS = window.SeeMS || {};
 jQuery.extend(SeeMS, {
   Admin: {
+
+    // Fetch top pages
     fetchPages: function() {
+      var self = this;
       $.ajax({
         method: 'get',
         url: '/admin/pages',
         success: function(data) {
-          $sortable = $("ul.sortable");
-          $sortable.html("");
+          self.$sortable.html("");
           JSON.parse(data).each(function(page) {
             $li = $("<li></li>");
             $li.text(page.title);
             $li.attr("id", page._id);
-            $sortable.append($li);
+            self.$sortable.append($li);
           });
         }
       });
-    } // fetchPages
+    }, // fetchPages
+
+    updateApplication: function() {
+      var self = this;
+      $.ajax({
+        method: 'post',
+        url: '/admin/app/update',
+        data: {
+          application: {
+            page_ids: self.$sortable.sortable("toArray")
+          }
+        },
+        success: function(data) {
+          alert('success');
+        }
+      });
+    } // updateApplication
   } // Admin
 }); // jQuery.extend
