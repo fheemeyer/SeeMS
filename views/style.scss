@@ -5,6 +5,14 @@
   background-color: #eee;
 }
 
+.left {
+  float: left;
+}
+
+.right {
+  float: right
+}
+
 .navbar {
   margin-bottom: 0px;
 }
@@ -60,5 +68,37 @@ body.admin {
     background-color: #ccc;
     padding: 3px 3px;
     margin-top: 3px;
+    margin-left: -38px;
+
+    li.child {
+      background-color: #eee;
+    }
+
+    .glyphicon {
+      float: right;
+      cursor: pointer;
+      margin-left: 3px;
+    }
+  }
+
+  #save-app {
+    margin-right: 20px;
+  }
+
+  .ui-dialog {
+    font: inherit!important;
+  }
+  .ui-widget-header {
+    background: #ccc;
+    font-weight: normal;
+    font-size: 110%;
+    margin-bottom: 5px;
+  }
+  .ui-corner-all {
+    border-radius: 0px;
+  }
+  label {
+    font-weight: normal;
+    margin-top: 7px;
   }
 }

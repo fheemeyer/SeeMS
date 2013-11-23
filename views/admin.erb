@@ -5,20 +5,44 @@
 
 <h1>Admin.</h1>
 
-<ul class="sortable">
-</ul>
+<div class="row">
+  <div class="col-lg-6">
+    <h4>Navigation</h4>
+    <ul id="pages" class="sortable">
+    </ul>
+    <button id="new-page" class="btn btn-success">Neue Seite erstellen</button>
+  </div>
 
-<button id="save-app" class="btn btn-primary">Änderungen speichern</button>
-<button id="new-page" class="btn btn-success">Neue Seite erstellen</button>
+  <div class="col-lg-6">
+    <h4>Allgemeine Informationen</h4>
+    <label id="page-title-label" for="page[title]">Titel:</label>
+    <input type="text" class="form-control" name="application[title]" id="application-title" value="<%= @app.title %>" />
+    <label id="page-title-label" for="page[title]">Besitzer:</label>
+    <input type="text" class="form-control" name="application[owner]" id="application-owner" value="<%= @app.owner %>" />
+  </div>
+
+</div>
+<hr />
+<div class="row right">
+  <button id="save-app" class="btn btn-primary">Änderungen speichern</button>
+</div>
+<div class="clear">
+</div>
 
 <div id="new-page-dialog">
   <fieldset>
-    <label for="page[title]">Titel:</label>
+    <label id="page-title-label" for="page[title]">Titel:</label>
     <input type="text" name="page[title]" id="page-title" class="form-control" />
-    <label for="name">Typ:</label>
+    <label id="page-url-label" for="page[url]">Url:</label>
+    <input type="text" name="page[url]" id="page-url" class="form-control" />
+    <label id="page-name-label" for="name">Typ:</label>
     <select name="page[type]" id="page-type" class="form-control">
       <option value="content">Seite mit Inhalt</option>
       <option value="navigation">Navigationspunkt</option>
+    </select>
+    <label id="page-parent-label" for="name">Parent:</label>
+    <select name="page[parent_id]" id="page-parent" class="form-control">
+      <option value="<%= @app.id %>">Application</option>
     </select>
   </fieldset>
 </div>

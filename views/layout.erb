@@ -6,19 +6,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Yvonne Heemeyer</title>
+    <title><%= @page_title %></title>
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="bootstrap.css">
+    <!-- Bootstrap core -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 
     <!-- My CSS -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- Bootstrap core JS -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <!-- jQuery UI -->
     <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <!-- SeeMS Standard JS -->
@@ -40,7 +40,7 @@
     <%= yield_content(:head) %>
   </head>
 
-  <body class="<%= @page.to_s %>">
+  <body class="<%= @page_title %>">
 
     <div class="navbar" id="header">
       <div class="container">
@@ -53,7 +53,18 @@
         <div class="nav-collapse">
           <ul class="nav navbar-nav">
             <% @pages.each do |page| %>
-              <li><%= page.title %></li>
+              <% if page.class == ContentPage %>
+                <li><a href="<%= page.full_url %>"><%= page.title %></a></li>
+              <% elsif page.class == NavigationPage %>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= page.title %> <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                  <% page.children.each do |child| %>
+                    <li><a href="<%= child.full_url %>"><%= child.title %></a></li>
+                  <% end %>
+                  </ul>
+                </li>
+              <% end %>
             <% end %>
           </ul>
         </div><!--/.nav-collapse -->
@@ -65,7 +76,7 @@
     </div><!-- /.container -->
 
     <div id="footer">
-      (C) 2013 Yvonne Heemeyer | 
+      (C) 2013 <%= @app.owner %> | 
       <a href="/imprint">Impressum</a> | 
       <a href="/admin">Admin</a>
     </div><!-- /.footer -->

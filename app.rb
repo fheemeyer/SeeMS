@@ -10,6 +10,7 @@ include FileUtils
 Mongoid.load!('config/mongoid.yml')
 
 set :bind, '0.0.0.0'
+set :env, :development
 
 before do
   unless Application.first
@@ -17,7 +18,10 @@ before do
   end
 
   @app = Application.first
-  @pages = @app.pages
+  @pages = @app.children
+end
+
+get '/favicon.ico' do
 end
 
 # Styles
@@ -27,32 +31,43 @@ end
 
 # Pages
 get '/p/:page' do
+  @page = Page.where(url: params[:page]).first
+  @page_title = @page.url
 
+  erb :page, {layout: :layout}
 end
 
 # Admin Corner
-get '/admin' do
-  @page = :admin
-  erb :admin, {layout: :layout}
-end
-
-post '/admin/app/update' do
-  @app.update_attributes(params[:application])
-end
-
-post '/admin/pages/create' do
-  if(params["page"]["type"] == "content")
-    @new_page = ContentPage.new(params["page"])
-  else
-    @new_page = NavigationPage.new(params["page"])
+namespace '/admin' do
+  get '' do
+    @page_title = "admin"
+    erb :admin, {layout: :layout}
   end
 
-  @new_page.save
-  @app.pages << @new_page
-end
+  post '/app/update' do
+    if params[:application][:child_ids]
+      @app.child_ids = params[:application][:child_ids].map!{|id| Moped::BSON::ObjectId.from_string(id)}
+    end
+    @app.save!
+  end
 
-get '/admin/pages' do
-  @pages.to_json
+  get '/pages' do
+    @pages.to_json
+  end
+
+  post '/pages/create' do
+    if(params["page"]["type"] == "content")
+      @new_page = ContentPage.new(params["page"]).save!
+    else
+      @new_page = NavigationPage.new(params["page"]).save!
+    end
+
+    "true"
+  end
+
+  get '/:page/children' do
+    Page.find(params[:page]).children.to_json
+  end
 end
 
 # Additional
@@ -64,11 +79,6 @@ end
 get '/imprint' do
   @page = :imprint
   erb :imprint, {layout: :layout}
-end
-
-get '/test' do
-  @page = :test
-  erb :test, {layout: :layout}
 end
 
 # Helpers
