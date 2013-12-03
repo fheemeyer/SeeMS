@@ -7,7 +7,7 @@ require "pry"
 require_relative "models/init"
 include FileUtils
 
-Mongoid.load!('config/mongoid.yml')
+Mongoid.load!  File.join(File.dirname(__FILE__), 'config', 'mongoid.yml')
 
 set :bind, '0.0.0.0'
 set :env, :development
@@ -18,7 +18,7 @@ before do
   end
 
   @app = Application.first
-  @pages = @app.children
+  @pages = @app.children_sorted
 end
 
 get '/favicon.ico' do
@@ -46,27 +46,39 @@ namespace '/admin' do
 
   post '/app/update' do
     if params[:application][:child_ids]
-      @app.child_ids = params[:application][:child_ids].map!{|id| Moped::BSON::ObjectId.from_string(id)}
+      @app.update_children(params[:application][:child_ids])
     end
     @app.save!
   end
 
+  get '/pages/:page_id/edit' do
+    @page = Page.find(params[:page_id])
+    erb :edit_page, {layout: :layout}
+  end
+
+  post '/pages/:page_id/update' do
+    @page = Page.find(params[:page_id])
+    if params[:page][:child_ids]
+      @page.update_children(params[:application][:child_ids])
+    end
+    @page.save!
+  end
+
   get '/pages' do
-    @pages.to_json
+    @pages.to_json(include: :children)
   end
 
   post '/pages/create' do
     if(params["page"]["type"] == "content")
-      @new_page = ContentPage.new(params["page"]).save!
+      ContentPage.new(params["page"]).save!
     else
-      @new_page = NavigationPage.new(params["page"]).save!
+      params["page"]["parent"] = @app.id
+      NavigationPage.new(params["page"]).save!
     end
 
-    "true"
-  end
+    Page.find(params["page"]["parent"]).children << Page.last
 
-  get '/:page/children' do
-    Page.find(params[:page]).children.to_json
+    "true"
   end
 end
 

@@ -13,6 +13,12 @@
   float: right
 }
 
+.clear {
+  float: clear;
+  clear: both;
+}
+
+
 .navbar {
   margin-bottom: 0px;
 }
@@ -66,12 +72,23 @@ body.admin {
   .sortable li {
     list-style: none;
     background-color: #ccc;
-    padding: 3px 3px;
+    padding: 5px 5px;
+    cursor: move;
+    border-radius: 3px;
     margin-top: 3px;
     margin-left: -38px;
 
+    h1 {
+      float: right;
+    }
+
     li.child {
       background-color: #eee;
+      border: 1px solid #aaa;
+    }
+
+    ul.children {
+      display: none;
     }
 
     .glyphicon {
@@ -79,6 +96,10 @@ body.admin {
       cursor: pointer;
       margin-left: 3px;
     }
+  }
+
+  #nav-settings {
+    border-right: 1px solid #afafaf;
   }
 
   #save-app {

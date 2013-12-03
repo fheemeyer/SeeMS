@@ -57,17 +57,6 @@ jQuery.extend(SeeMS, {
       });
     }, // fetchPages
 
-    fetchChildren: function(id, callback) {
-      var self = this;
-      $.ajax({
-        method: 'get',
-        url: '/admin/' + id + '/children',
-        success: function(data) {
-          callback(JSON.parse(data));
-        }
-      });
-    }, // fetchChildren
-
     createPage: function() {
       var pageData =  {
         title: $("#page-title").val(),
@@ -110,6 +99,26 @@ jQuery.extend(SeeMS, {
       });
     }, // updateApplication
 
+    updateAllNavigationPages: function(){},
+
+    updatePage: function(callback, $ul) {
+      var self = this;
+      $.ajax({
+        method: 'post',
+        url: '/admin/page/update',
+        data: {
+          page: {
+            child_ids: self.$ul.sortable("toArray")
+          }
+        },
+        success: function(data) {
+          if(callback) {
+            callback();
+          }
+        }
+      });
+    }, // updateApplication
+
     // # Dom Manipulation #
 
     createNewPageDialog: function() {
@@ -139,6 +148,7 @@ jQuery.extend(SeeMS, {
       $li.append($div);
       this.createDeleteButton($div);
       if(page.type == "navigation") {
+        this.addChildren($div.parent(), page.children);
         this.createChildrenButton($div);
       }
       else {
@@ -152,7 +162,7 @@ jQuery.extend(SeeMS, {
       var $deleteSpan = $('<span class="rm-page glyphicon glyphicon-remove"></span>');
       $div.append($deleteSpan);
       $deleteSpan.click(function(e) {
-        $div.fadeOut(function() {
+        $div.parent().fadeOut(function() {
           $(this).remove();
         });
       });
@@ -169,31 +179,29 @@ jQuery.extend(SeeMS, {
 
     createChildrenButton: function($div) {
       var self = this;
-      var $childSpan = $('<span class="children glyphicon glyphicon-chevron-down"></span>');
+      var $childSpan = $('<span class="show-children glyphicon glyphicon-chevron-down"></span>');
       $div.append($childSpan);
       $childSpan.click(function(e) {
         if($childSpan.hasClass("glyphicon-chevron-down")) {
           $childSpan.removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-up");
-          self.addChildren($div.parent());
+          $div.parent().find(".children").show();
         }
         else {
           $childSpan.removeClass("glyphicon-chevron-up").addClass("glyphicon-chevron-down");
-          $div.parent().find("ul").remove();
+          $div.parent().find(".children").hide();
         }
       }); // click
     }, //createDeleteButton
 
-    addChildren: function($li) {
-      var $ul = $('<ul></ul>');
+    addChildren: function($li, children) {
+      var $ul = $('<ul class="children"></ul>');
       var parentId = $li.attr('id');
-      this.fetchChildren($li.attr('id'), function(children) {
-        children.each(function(child) {
-          var $childLi = $('<li id="'+child._id+'" class="child '+parentId+'">'+child.title+'</li>');
-          $ul.append($childLi);
-        });
-        $li.append($ul);
-        $ul.sortable();
-      }); // fetchChildren
+      children.each(function(child) {
+        var $childLi = $('<li id="'+child._id+'" class="child '+parentId+'">'+child.title+'</li>');
+        $ul.append($childLi);
+      });
+      $li.append($ul);
+      $ul.sortable();
     }, // addChildren
 
     // For dialog

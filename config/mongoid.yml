@@ -5,6 +5,13 @@ development:
         - localhost
       database: yheemeyer
 
+test:
+  sessions:
+    default:
+      hosts: 
+        - localhost
+      database: yheemeyer-test
+
 production:
   sessions:
     default:

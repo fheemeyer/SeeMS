@@ -1,0 +1,47 @@
+<link rel="Stylesheet" href="/medium-editor.css" />
+<script src="/js/medium-editor.js"></script>
+<script>
+$(function() {
+  SeeMS.editor = new MediumEditor($("#editor"));
+
+  $("#save-page").click(function() {
+    SeeMS.Admin.updatePage();
+  });
+
+});
+
+jQuery.extend(SeeMS, {
+  Admin: {
+    updatePage: function(callback, $ul) {
+      var self = this;
+      $.ajax({
+        method: 'post',
+        url: '/admin/page/update',
+        data: {
+          page: {
+            child_ids: self.$ul.sortable("toArray")
+          }
+        },
+        success: function(data) {
+          if(callback) {
+            callback();
+          }
+        }
+      }); // Ajax
+    } // updateApplication
+  }
+});
+</script>
+
+<p>
+  <h2><%= @page.title %> editieren</h2>
+</p>
+
+<p>
+  <div id="editor">
+    <%= @page.content %>
+  </div>
+</p>
+
+
+<button class="btn btn-success">Speichern</button>

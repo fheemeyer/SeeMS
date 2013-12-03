@@ -9,3 +9,7 @@ gem "mongoid"
 
 gem "pry"
 
+# Testing
+gem "rspec"
+gem "capybara"
+gem "poltergeist"
