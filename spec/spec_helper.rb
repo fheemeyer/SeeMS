@@ -1,7 +1,10 @@
 require "rspec"
 require "rack/test"
 require "capybara"
+require 'coveralls'
 require File.join(File.dirname(__FILE__), '..', 'app')
+
+Coveralls.wear!
 
 set :environment, :test
 

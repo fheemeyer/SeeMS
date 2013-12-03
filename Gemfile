@@ -14,3 +14,4 @@ gem "pry"
 gem "rspec"
 gem "capybara"
 gem "poltergeist"
+gem "coveralls", require: false
