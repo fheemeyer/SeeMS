@@ -48,6 +48,7 @@ namespace '/admin' do
     if params[:application][:child_ids]
       @app.update_children(params[:application][:child_ids])
     end
+    @app.update_attributes(params[:application])
     @app.save!
   end
 

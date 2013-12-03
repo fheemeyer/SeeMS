@@ -7,6 +7,7 @@ require File.join(File.dirname(__FILE__), '..', 'app')
 Coveralls.wear!
 
 set :environment, :test
+ENV['RACK_ENV'] = 'test'
 
 RSpec.configure do |conf|
   color_enabled = true

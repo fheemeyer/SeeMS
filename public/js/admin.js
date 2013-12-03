@@ -88,10 +88,13 @@ jQuery.extend(SeeMS, {
         url: '/admin/app/update',
         data: {
           application: {
-            child_ids: self.$pages.sortable("toArray")
+            child_ids: self.$pages.sortable("toArray"),
+            title: $("#application-title").val(),
+            owner: $("#application-owner").val()
           }
         },
         success: function(data) {
+          self.showApplicationUpdatedLabel();
           if(callback) {
             callback();
           }
@@ -213,6 +216,15 @@ jQuery.extend(SeeMS, {
         $pageParent.append($option);
       });
     }, //addNavigationPageOptions
+
+    showApplicationUpdatedLabel: function() {
+      $label = $("#application-updated");
+      $label.fadeIn("slow", function() {
+        window.setTimeout(function() {
+          $label.fadeOut("slow");
+        }, 2000);
+      });
+    },
 
     // # all other stuff #
 
