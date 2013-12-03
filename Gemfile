@@ -6,6 +6,7 @@ gem "sinatra-contrib"
 gem "shotgun"
 gem "sass"
 gem "mongoid"
+gem "rake"
 
 gem "pry"
 
